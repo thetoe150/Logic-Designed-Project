@@ -10,7 +10,8 @@
                 "UNICODE",
                 "_UNICODE",
                 "USE_HAL_DRIVER",
-                "STM32H743xx"
+                "STM32H743xx",
+                "DCMI"
             ],
             "windowsSdkVersion": "10.0.19041.0",
             "compilerPath": "${env:ARMGCC_DIR}/arm-none-eabi-gcc.exe",

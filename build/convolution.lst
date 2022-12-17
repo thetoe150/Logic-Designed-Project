@@ -1,0 +1,843 @@
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"convolution.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.initiate_matrix,"ax",%progbits
+  19              		.align	1
+  20              		.global	initiate_matrix
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	initiate_matrix:
+  26              	.LVL0:
+  27              	.LFB144:
+  28              		.file 1 "Src/convolution.c"
+   1:Src/convolution.c **** #include "convolution.h"
+   2:Src/convolution.c **** 
+   3:Src/convolution.c **** static int8_t ker_mat_ver[KERNEL_SIZE][KERNEL_SIZE] =
+   4:Src/convolution.c **** {
+   5:Src/convolution.c ****     {1, 0, -1},
+   6:Src/convolution.c ****     {2, 0, -2},
+   7:Src/convolution.c ****     {1, 0, -1}
+   8:Src/convolution.c **** };
+   9:Src/convolution.c **** 
+  10:Src/convolution.c **** static int8_t ker_mat_hor[KERNEL_SIZE][KERNEL_SIZE] =
+  11:Src/convolution.c **** {
+  12:Src/convolution.c ****     {1, 2, 1},
+  13:Src/convolution.c ****     {0, 0, 0},
+  14:Src/convolution.c ****     {-1, -2, -1}
+  15:Src/convolution.c **** };
+  16:Src/convolution.c **** 
+  17:Src/convolution.c **** void initiate_matrix(uint8_t image_mat[IMAGE_SIZE][IMAGE_SIZE]){
+  29              		.loc 1 17 64 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 17 64 is_stmt 0 view .LVU1
+  34 0000 00B5     		push	{lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 14, -4
+  38 0002 8646     		mov	lr, r0
+  18:Src/convolution.c ****     for(int i = 0; i < IMAGE_SIZE; i++){
+  39              		.loc 1 18 5 is_stmt 1 view .LVU2
+  40              	.LBB2:
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 2
+
+
+  41              		.loc 1 18 9 view .LVU3
+  42              	.LVL1:
+  43              		.loc 1 18 13 is_stmt 0 view .LVU4
+  44 0004 4FF0000C 		mov	ip, #0
+  45              		.loc 1 18 5 view .LVU5
+  46 0008 14E0     		b	.L2
+  47              	.LVL2:
+  48              	.L3:
+  49              	.LBB3:
+  19:Src/convolution.c ****         for(int j = 0; j < IMAGE_SIZE; j++){
+  20:Src/convolution.c ****             image_mat[i][j] = (i +j) % 250;
+  50              		.loc 1 20 13 is_stmt 1 discriminator 3 view .LVU6
+  51              		.loc 1 20 34 is_stmt 0 discriminator 3 view .LVU7
+  52 000a 0CEB0201 		add	r1, ip, r2
+  53              		.loc 1 20 38 discriminator 3 view .LVU8
+  54 000e 0D48     		ldr	r0, .L8
+  55 0010 80FB0130 		smull	r3, r0, r0, r1
+  56 0014 CB17     		asrs	r3, r1, #31
+  57 0016 C3EB2013 		rsb	r3, r3, r0, asr #4
+  58 001a FA20     		movs	r0, #250
+  59 001c 00FB1313 		mls	r3, r0, r3, r1
+  60              		.loc 1 20 22 discriminator 3 view .LVU9
+  61 0020 CCEB0C11 		rsb	r1, ip, ip, lsl #4
+  62 0024 0EEBC101 		add	r1, lr, r1, lsl #3
+  63              		.loc 1 20 29 discriminator 3 view .LVU10
+  64 0028 8B54     		strb	r3, [r1, r2]
+  19:Src/convolution.c ****         for(int j = 0; j < IMAGE_SIZE; j++){
+  65              		.loc 1 19 40 is_stmt 1 discriminator 3 view .LVU11
+  19:Src/convolution.c ****         for(int j = 0; j < IMAGE_SIZE; j++){
+  66              		.loc 1 19 41 is_stmt 0 discriminator 3 view .LVU12
+  67 002a 0132     		adds	r2, r2, #1
+  68              	.LVL3:
+  69              	.L4:
+  19:Src/convolution.c ****         for(int j = 0; j < IMAGE_SIZE; j++){
+  70              		.loc 1 19 24 is_stmt 1 discriminator 1 view .LVU13
+  19:Src/convolution.c ****         for(int j = 0; j < IMAGE_SIZE; j++){
+  71              		.loc 1 19 9 is_stmt 0 discriminator 1 view .LVU14
+  72 002c 772A     		cmp	r2, #119
+  73 002e ECDD     		ble	.L3
+  74              	.LBE3:
+  18:Src/convolution.c ****     for(int i = 0; i < IMAGE_SIZE; i++){
+  75              		.loc 1 18 36 is_stmt 1 discriminator 2 view .LVU15
+  18:Src/convolution.c ****     for(int i = 0; i < IMAGE_SIZE; i++){
+  76              		.loc 1 18 37 is_stmt 0 discriminator 2 view .LVU16
+  77 0030 0CF1010C 		add	ip, ip, #1
+  78              	.LVL4:
+  79              	.L2:
+  18:Src/convolution.c ****     for(int i = 0; i < IMAGE_SIZE; i++){
+  80              		.loc 1 18 20 is_stmt 1 discriminator 1 view .LVU17
+  18:Src/convolution.c ****     for(int i = 0; i < IMAGE_SIZE; i++){
+  81              		.loc 1 18 5 is_stmt 0 discriminator 1 view .LVU18
+  82 0034 BCF1770F 		cmp	ip, #119
+  83 0038 01DC     		bgt	.L7
+  84              	.LBB4:
+  19:Src/convolution.c ****         for(int j = 0; j < IMAGE_SIZE; j++){
+  85              		.loc 1 19 17 view .LVU19
+  86 003a 0022     		movs	r2, #0
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 3
+
+
+  87 003c F6E7     		b	.L4
+  88              	.L7:
+  89              	.LBE4:
+  90              	.LBE2:
+  21:Src/convolution.c ****         }
+  22:Src/convolution.c ****     }
+  23:Src/convolution.c **** }
+  91              		.loc 1 23 1 view .LVU20
+  92 003e 5DF804FB 		ldr	pc, [sp], #4
+  93              	.L9:
+  94 0042 00BF     		.align	2
+  95              	.L8:
+  96 0044 D34D6210 		.word	274877907
+  97              		.cfi_endproc
+  98              	.LFE144:
+ 100              		.section	.rodata.print_matrix.str1.4,"aMS",%progbits,1
+ 101              		.align	2
+ 102              	.LC0:
+ 103 0000 25642C20 		.ascii	"%d, \000"
+ 103      00
+ 104              		.section	.text.print_matrix,"ax",%progbits
+ 105              		.align	1
+ 106              		.global	print_matrix
+ 107              		.syntax unified
+ 108              		.thumb
+ 109              		.thumb_func
+ 111              	print_matrix:
+ 112              	.LVL5:
+ 113              	.LFB145:
+  24:Src/convolution.c **** 
+  25:Src/convolution.c **** void print_matrix(uint8_t image_mat[IMAGE_SIZE][IMAGE_SIZE], int rows, int cols){
+ 114              		.loc 1 25 81 is_stmt 1 view -0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 0
+ 117              		@ frame_needed = 0, uses_anonymous_args = 0
+ 118              		.loc 1 25 81 is_stmt 0 view .LVU22
+ 119 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 120              	.LCFI1:
+ 121              		.cfi_def_cfa_offset 24
+ 122              		.cfi_offset 4, -24
+ 123              		.cfi_offset 5, -20
+ 124              		.cfi_offset 6, -16
+ 125              		.cfi_offset 7, -12
+ 126              		.cfi_offset 8, -8
+ 127              		.cfi_offset 14, -4
+ 128 0004 0746     		mov	r7, r0
+ 129 0006 8846     		mov	r8, r1
+ 130 0008 1646     		mov	r6, r2
+  26:Src/convolution.c ****     for(unsigned int image_i = 0; image_i< rows; image_i++){
+ 131              		.loc 1 26 5 is_stmt 1 view .LVU23
+ 132              	.LBB5:
+ 133              		.loc 1 26 9 view .LVU24
+ 134              	.LVL6:
+ 135              		.loc 1 26 22 is_stmt 0 view .LVU25
+ 136 000a 0025     		movs	r5, #0
+ 137              		.loc 1 26 5 view .LVU26
+ 138 000c 0EE0     		b	.L11
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 4
+
+
+ 139              	.LVL7:
+ 140              	.L12:
+ 141              	.LBB6:
+ 142              	.LBB7:
+ 143              	.LBB8:
+  27:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+  28:Src/convolution.c ****             printf("%d, ",image_mat[image_i][image_j]);
+ 144              		.loc 1 28 13 is_stmt 1 discriminator 3 view .LVU27
+ 145              		.loc 1 28 36 is_stmt 0 discriminator 3 view .LVU28
+ 146 000e C5EB0513 		rsb	r3, r5, r5, lsl #4
+ 147 0012 07EBC303 		add	r3, r7, r3, lsl #3
+ 148              		.loc 1 28 13 discriminator 3 view .LVU29
+ 149 0016 195D     		ldrb	r1, [r3, r4]	@ zero_extendqisi2
+ 150 0018 0748     		ldr	r0, .L17
+ 151 001a FFF7FEFF 		bl	printf
+ 152              	.LVL8:
+ 153              	.LBE8:
+  27:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 154              		.loc 1 27 55 is_stmt 1 discriminator 3 view .LVU30
+  27:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 155              		.loc 1 27 62 is_stmt 0 discriminator 3 view .LVU31
+ 156 001e 0134     		adds	r4, r4, #1
+ 157              	.LVL9:
+ 158              	.L13:
+  27:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 159              		.loc 1 27 39 is_stmt 1 discriminator 1 view .LVU32
+  27:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 160              		.loc 1 27 9 is_stmt 0 discriminator 1 view .LVU33
+ 161 0020 A642     		cmp	r6, r4
+ 162 0022 F4D8     		bhi	.L12
+ 163              	.LBE7:
+  29:Src/convolution.c ****         }
+  30:Src/convolution.c ****         printf("\n");
+ 164              		.loc 1 30 9 is_stmt 1 discriminator 2 view .LVU34
+ 165 0024 0A20     		movs	r0, #10
+ 166 0026 FFF7FEFF 		bl	putchar
+ 167              	.LVL10:
+ 168              	.LBE6:
+  26:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 169              		.loc 1 26 50 discriminator 2 view .LVU35
+  26:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 170              		.loc 1 26 57 is_stmt 0 discriminator 2 view .LVU36
+ 171 002a 0135     		adds	r5, r5, #1
+ 172              	.LVL11:
+ 173              	.L11:
+  26:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 174              		.loc 1 26 35 is_stmt 1 discriminator 1 view .LVU37
+  26:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 175              		.loc 1 26 5 is_stmt 0 discriminator 1 view .LVU38
+ 176 002c A845     		cmp	r8, r5
+ 177 002e 01D9     		bls	.L16
+ 178              	.LBB10:
+ 179              	.LBB9:
+  27:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 180              		.loc 1 27 26 view .LVU39
+ 181 0030 0024     		movs	r4, #0
+ 182 0032 F5E7     		b	.L13
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 5
+
+
+ 183              	.L16:
+ 184              	.LBE9:
+ 185              	.LBE10:
+ 186              	.LBE5:
+  31:Src/convolution.c ****     }
+  32:Src/convolution.c **** }
+ 187              		.loc 1 32 1 view .LVU40
+ 188 0034 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 189              	.LVL12:
+ 190              	.L18:
+ 191              		.loc 1 32 1 view .LVU41
+ 192              		.align	2
+ 193              	.L17:
+ 194 0038 00000000 		.word	.LC0
+ 195              		.cfi_endproc
+ 196              	.LFE145:
+ 198              		.section	.text.Sobel_operator_ver,"ax",%progbits
+ 199              		.align	1
+ 200              		.global	Sobel_operator_ver
+ 201              		.syntax unified
+ 202              		.thumb
+ 203              		.thumb_func
+ 205              	Sobel_operator_ver:
+ 206              	.LVL13:
+ 207              	.LFB146:
+  33:Src/convolution.c **** 
+  34:Src/convolution.c **** void Sobel_operator_ver(uint8_t output_mat[IMAGE_SIZE][IMAGE_SIZE], uint8_t input_mat[IMAGE_SIZE][I
+ 208              		.loc 1 34 130 is_stmt 1 view -0
+ 209              		.cfi_startproc
+ 210              		@ args = 0, pretend = 0, frame = 0
+ 211              		@ frame_needed = 0, uses_anonymous_args = 0
+ 212              		.loc 1 34 130 is_stmt 0 view .LVU43
+ 213 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 214              	.LCFI2:
+ 215              		.cfi_def_cfa_offset 32
+ 216              		.cfi_offset 4, -32
+ 217              		.cfi_offset 5, -28
+ 218              		.cfi_offset 6, -24
+ 219              		.cfi_offset 7, -20
+ 220              		.cfi_offset 8, -16
+ 221              		.cfi_offset 9, -12
+ 222              		.cfi_offset 10, -8
+ 223              		.cfi_offset 14, -4
+ 224 0004 0646     		mov	r6, r0
+ 225 0006 0F46     		mov	r7, r1
+ 226 0008 1546     		mov	r5, r2
+ 227 000a 9946     		mov	r9, r3
+  35:Src/convolution.c ****     const int dx = KERNEL_SIZE/2;
+ 228              		.loc 1 35 5 is_stmt 1 view .LVU44
+ 229              	.LVL14:
+  36:Src/convolution.c ****     const int dy = KERNEL_SIZE/2;
+ 230              		.loc 1 36 5 view .LVU45
+  37:Src/convolution.c ****     for(unsigned int image_i = 0; image_i< rows; image_i++){ 
+ 231              		.loc 1 37 5 view .LVU46
+ 232              	.LBB11:
+ 233              		.loc 1 37 9 view .LVU47
+ 234              		.loc 1 37 22 is_stmt 0 view .LVU48
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 6
+
+
+ 235 000c 0024     		movs	r4, #0
+ 236              		.loc 1 37 5 view .LVU49
+ 237 000e 48E0     		b	.L20
+ 238              	.LVL15:
+ 239              	.L34:
+ 240              	.LBB12:
+ 241              	.LBB13:
+ 242              	.LBB14:
+ 243              	.LBB15:
+ 244              	.LBB16:
+  38:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+  39:Src/convolution.c ****             int accum = 0;
+  40:Src/convolution.c ****             for(unsigned int ker_i = 0; ker_i < KERNEL_SIZE; ker_i++){ 
+  41:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+  42:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+  43:Src/convolution.c ****                     int y = image_j - dy + ker_j;
+  44:Src/convolution.c ****                     if(x >= 0 && x < rows && y >= 0 && y < cols)
+  45:Src/convolution.c ****                         accum += ker_mat_ver[ker_i][ker_j] * input_mat[x][y];             
+ 245              		.loc 1 45 25 is_stmt 1 view .LVU50
+ 246              		.loc 1 45 52 is_stmt 0 view .LVU51
+ 247 0010 0CEB4C0A 		add	r10, ip, ip, lsl #1
+ 248 0014 264B     		ldr	r3, .L38
+ 249 0016 5344     		add	r3, r3, r10
+ 250 0018 9B56     		ldrsb	r3, [r3, r2]
+ 251              		.loc 1 45 71 view .LVU52
+ 252 001a C0EB0010 		rsb	r0, r0, r0, lsl #4
+ 253              	.LVL16:
+ 254              		.loc 1 45 71 view .LVU53
+ 255 001e 07EBC000 		add	r0, r7, r0, lsl #3
+ 256              		.loc 1 45 74 view .LVU54
+ 257 0022 415C     		ldrb	r1, [r0, r1]	@ zero_extendqisi2
+ 258              	.LVL17:
+ 259              		.loc 1 45 31 view .LVU55
+ 260 0024 01FB0388 		mla	r8, r1, r3, r8
+ 261              	.LVL18:
+ 262              	.L21:
+ 263              		.loc 1 45 31 view .LVU56
+ 264              	.LBE16:
+  41:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+ 265              		.loc 1 41 66 is_stmt 1 discriminator 2 view .LVU57
+  41:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+ 266              		.loc 1 41 71 is_stmt 0 discriminator 2 view .LVU58
+ 267 0028 0132     		adds	r2, r2, #1
+ 268              	.LVL19:
+ 269              	.L23:
+  41:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+ 270              		.loc 1 41 45 is_stmt 1 discriminator 1 view .LVU59
+  41:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+ 271              		.loc 1 41 17 is_stmt 0 discriminator 1 view .LVU60
+ 272 002a 022A     		cmp	r2, #2
+ 273 002c 18D8     		bhi	.L33
+ 274              	.LBB17:
+  42:Src/convolution.c ****                     int y = image_j - dy + ker_j;
+ 275              		.loc 1 42 21 is_stmt 1 view .LVU61
+  42:Src/convolution.c ****                     int y = image_j - dy + ker_j;
+ 276              		.loc 1 42 42 is_stmt 0 view .LVU62
+ 277 002e 04EB0C03 		add	r3, r4, ip
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 7
+
+
+ 278 0032 581E     		subs	r0, r3, #1
+ 279              	.LVL20:
+  43:Src/convolution.c ****                     if(x >= 0 && x < rows && y >= 0 && y < cols)
+ 280              		.loc 1 43 21 is_stmt 1 view .LVU63
+  43:Src/convolution.c ****                     if(x >= 0 && x < rows && y >= 0 && y < cols)
+ 281              		.loc 1 43 42 is_stmt 0 view .LVU64
+ 282 0034 0EEB0201 		add	r1, lr, r2
+ 283 0038 0139     		subs	r1, r1, #1
+ 284              	.LVL21:
+  44:Src/convolution.c ****                         accum += ker_mat_ver[ker_i][ker_j] * input_mat[x][y];             
+ 285              		.loc 1 44 21 is_stmt 1 view .LVU65
+  44:Src/convolution.c ****                         accum += ker_mat_ver[ker_i][ker_j] * input_mat[x][y];             
+ 286              		.loc 1 44 26 is_stmt 0 view .LVU66
+ 287 003a 5B42     		rsbs	r3, r3, #0
+  44:Src/convolution.c ****                         accum += ker_mat_ver[ker_i][ker_j] * input_mat[x][y];             
+ 288              		.loc 1 44 36 view .LVU67
+ 289 003c 8542     		cmp	r5, r0
+ 290 003e D4BF     		ite	le
+ 291 0040 4FF0000A 		movle	r10, #0
+ 292 0044 4FF0010A 		movgt	r10, #1
+  44:Src/convolution.c ****                         accum += ker_mat_ver[ker_i][ker_j] * input_mat[x][y];             
+ 293              		.loc 1 44 23 view .LVU68
+ 294 0048 1AEAD373 		ands	r3, r10, r3, lsr #31
+ 295 004c ECD0     		beq	.L21
+  44:Src/convolution.c ****                         accum += ker_mat_ver[ker_i][ker_j] * input_mat[x][y];             
+ 296              		.loc 1 44 58 discriminator 1 view .LVU69
+ 297 004e 8945     		cmp	r9, r1
+ 298 0050 D4BF     		ite	le
+ 299 0052 0023     		movle	r3, #0
+ 300 0054 0123     		movgt	r3, #1
+  44:Src/convolution.c ****                         accum += ker_mat_ver[ker_i][ker_j] * input_mat[x][y];             
+ 301              		.loc 1 44 53 discriminator 1 view .LVU70
+ 302 0056 0029     		cmp	r1, #0
+ 303 0058 E6DB     		blt	.L21
+ 304 005a 002B     		cmp	r3, #0
+ 305 005c D8D1     		bne	.L34
+ 306 005e E3E7     		b	.L21
+ 307              	.LVL22:
+ 308              	.L33:
+  44:Src/convolution.c ****                         accum += ker_mat_ver[ker_i][ker_j] * input_mat[x][y];             
+ 309              		.loc 1 44 53 discriminator 1 view .LVU71
+ 310              	.LBE17:
+ 311              	.LBE15:
+  40:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+ 312              		.loc 1 40 62 is_stmt 1 discriminator 2 view .LVU72
+  40:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+ 313              		.loc 1 40 67 is_stmt 0 discriminator 2 view .LVU73
+ 314 0060 0CF1010C 		add	ip, ip, #1
+ 315              	.LVL23:
+ 316              	.L25:
+  40:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+ 317              		.loc 1 40 41 is_stmt 1 discriminator 1 view .LVU74
+  40:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+ 318              		.loc 1 40 13 is_stmt 0 discriminator 1 view .LVU75
+ 319 0064 BCF1020F 		cmp	ip, #2
+ 320 0068 01D8     		bhi	.L35
+ 321              	.LBB18:
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 8
+
+
+  41:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+ 322              		.loc 1 41 34 view .LVU76
+ 323 006a 0022     		movs	r2, #0
+ 324 006c DDE7     		b	.L23
+ 325              	.L35:
+ 326              	.LBE18:
+ 327              	.LBE14:
+  46:Src/convolution.c ****                 }
+  47:Src/convolution.c ****             }
+  48:Src/convolution.c ****             if(accum < 0)
+ 328              		.loc 1 48 13 is_stmt 1 view .LVU77
+ 329              		.loc 1 48 15 is_stmt 0 view .LVU78
+ 330 006e B8F1000F 		cmp	r8, #0
+ 331 0072 05DB     		blt	.L28
+  49:Src/convolution.c ****                 accum = 0;
+  50:Src/convolution.c ****             if(accum > 253)
+ 332              		.loc 1 50 13 is_stmt 1 view .LVU79
+ 333              		.loc 1 50 15 is_stmt 0 view .LVU80
+ 334 0074 B8F1FD0F 		cmp	r8, #253
+ 335 0078 04DD     		ble	.L24
+  51:Src/convolution.c ****                 accum = 253;
+ 336              		.loc 1 51 23 view .LVU81
+ 337 007a 4FF0FD08 		mov	r8, #253
+ 338              	.LVL24:
+ 339              		.loc 1 51 23 view .LVU82
+ 340 007e 01E0     		b	.L24
+ 341              	.LVL25:
+ 342              	.L28:
+  49:Src/convolution.c ****                 accum = 0;
+ 343              		.loc 1 49 23 view .LVU83
+ 344 0080 4FF00008 		mov	r8, #0
+ 345              	.LVL26:
+ 346              	.L24:
+  52:Src/convolution.c ****             output_mat[image_i][image_j] = accum;
+ 347              		.loc 1 52 13 is_stmt 1 discriminator 2 view .LVU84
+ 348              		.loc 1 52 23 is_stmt 0 discriminator 2 view .LVU85
+ 349 0084 C4EB0413 		rsb	r3, r4, r4, lsl #4
+ 350 0088 06EBC303 		add	r3, r6, r3, lsl #3
+ 351              		.loc 1 52 42 discriminator 2 view .LVU86
+ 352 008c 03F80E80 		strb	r8, [r3, lr]
+ 353              	.LBE13:
+  38:Src/convolution.c ****             int accum = 0;
+ 354              		.loc 1 38 55 is_stmt 1 discriminator 2 view .LVU87
+  38:Src/convolution.c ****             int accum = 0;
+ 355              		.loc 1 38 62 is_stmt 0 discriminator 2 view .LVU88
+ 356 0090 0EF1010E 		add	lr, lr, #1
+ 357              	.LVL27:
+ 358              	.L26:
+  38:Src/convolution.c ****             int accum = 0;
+ 359              		.loc 1 38 39 is_stmt 1 discriminator 1 view .LVU89
+  38:Src/convolution.c ****             int accum = 0;
+ 360              		.loc 1 38 9 is_stmt 0 discriminator 1 view .LVU90
+ 361 0094 F145     		cmp	r9, lr
+ 362 0096 03D9     		bls	.L36
+ 363              	.LBB20:
+ 364              	.LBB19:
+  40:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 9
+
+
+ 365              		.loc 1 40 30 view .LVU91
+ 366 0098 4FF0000C 		mov	ip, #0
+ 367              	.LBE19:
+  39:Src/convolution.c ****             for(unsigned int ker_i = 0; ker_i < KERNEL_SIZE; ker_i++){ 
+ 368              		.loc 1 39 17 view .LVU92
+ 369 009c E046     		mov	r8, ip
+ 370 009e E1E7     		b	.L25
+ 371              	.L36:
+ 372              	.LBE20:
+ 373              	.LBE12:
+  37:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 374              		.loc 1 37 50 is_stmt 1 discriminator 2 view .LVU93
+  37:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 375              		.loc 1 37 57 is_stmt 0 discriminator 2 view .LVU94
+ 376 00a0 0134     		adds	r4, r4, #1
+ 377              	.LVL28:
+ 378              	.L20:
+  37:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 379              		.loc 1 37 35 is_stmt 1 discriminator 1 view .LVU95
+  37:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 380              		.loc 1 37 5 is_stmt 0 discriminator 1 view .LVU96
+ 381 00a2 A542     		cmp	r5, r4
+ 382 00a4 02D9     		bls	.L37
+ 383              	.LBB21:
+  38:Src/convolution.c ****             int accum = 0;
+ 384              		.loc 1 38 26 view .LVU97
+ 385 00a6 4FF0000E 		mov	lr, #0
+ 386 00aa F3E7     		b	.L26
+ 387              	.L37:
+ 388              	.LBE21:
+ 389              	.LBE11:
+  53:Src/convolution.c ****         }
+  54:Src/convolution.c ****     }
+  55:Src/convolution.c **** }
+ 390              		.loc 1 55 1 view .LVU98
+ 391 00ac BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 392              	.LVL29:
+ 393              	.L39:
+ 394              		.loc 1 55 1 view .LVU99
+ 395              		.align	2
+ 396              	.L38:
+ 397 00b0 00000000 		.word	.LANCHOR0
+ 398              		.cfi_endproc
+ 399              	.LFE146:
+ 401              		.section	.text.Sobel_operator_hor,"ax",%progbits
+ 402              		.align	1
+ 403              		.global	Sobel_operator_hor
+ 404              		.syntax unified
+ 405              		.thumb
+ 406              		.thumb_func
+ 408              	Sobel_operator_hor:
+ 409              	.LVL30:
+ 410              	.LFB147:
+  56:Src/convolution.c **** 
+  57:Src/convolution.c **** void Sobel_operator_hor(uint8_t output_mat[IMAGE_SIZE][IMAGE_SIZE], uint8_t input_mat[IMAGE_SIZE][I
+ 411              		.loc 1 57 130 is_stmt 1 view -0
+ 412              		.cfi_startproc
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 10
+
+
+ 413              		@ args = 0, pretend = 0, frame = 0
+ 414              		@ frame_needed = 0, uses_anonymous_args = 0
+ 415              		.loc 1 57 130 is_stmt 0 view .LVU101
+ 416 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 417              	.LCFI3:
+ 418              		.cfi_def_cfa_offset 32
+ 419              		.cfi_offset 4, -32
+ 420              		.cfi_offset 5, -28
+ 421              		.cfi_offset 6, -24
+ 422              		.cfi_offset 7, -20
+ 423              		.cfi_offset 8, -16
+ 424              		.cfi_offset 9, -12
+ 425              		.cfi_offset 10, -8
+ 426              		.cfi_offset 14, -4
+ 427 0004 0646     		mov	r6, r0
+ 428 0006 0F46     		mov	r7, r1
+ 429 0008 1546     		mov	r5, r2
+ 430 000a 9946     		mov	r9, r3
+  58:Src/convolution.c ****     const int dx = KERNEL_SIZE/2;
+ 431              		.loc 1 58 5 is_stmt 1 view .LVU102
+ 432              	.LVL31:
+  59:Src/convolution.c ****     const int dy = KERNEL_SIZE/2;
+ 433              		.loc 1 59 5 view .LVU103
+  60:Src/convolution.c ****     for(unsigned int image_i = 0; image_i< rows; image_i++){ 
+ 434              		.loc 1 60 5 view .LVU104
+ 435              	.LBB22:
+ 436              		.loc 1 60 9 view .LVU105
+ 437              		.loc 1 60 22 is_stmt 0 view .LVU106
+ 438 000c 0024     		movs	r4, #0
+ 439              		.loc 1 60 5 view .LVU107
+ 440 000e 48E0     		b	.L41
+ 441              	.LVL32:
+ 442              	.L55:
+ 443              	.LBB23:
+ 444              	.LBB24:
+ 445              	.LBB25:
+ 446              	.LBB26:
+ 447              	.LBB27:
+  61:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+  62:Src/convolution.c ****             int accum = 0;
+  63:Src/convolution.c ****             for(unsigned int ker_i = 0; ker_i < KERNEL_SIZE; ker_i++){ 
+  64:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+  65:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+  66:Src/convolution.c ****                     int y = image_j - dy + ker_j;
+  67:Src/convolution.c ****                     if(x >= 0 && x < rows && y >= 0 && y < cols)
+  68:Src/convolution.c ****                         accum += ker_mat_hor[ker_i][ker_j] * input_mat[x][y];             
+ 448              		.loc 1 68 25 is_stmt 1 view .LVU108
+ 449              		.loc 1 68 52 is_stmt 0 view .LVU109
+ 450 0010 0CEB4C0A 		add	r10, ip, ip, lsl #1
+ 451 0014 264B     		ldr	r3, .L59
+ 452 0016 5344     		add	r3, r3, r10
+ 453 0018 9B56     		ldrsb	r3, [r3, r2]
+ 454              		.loc 1 68 71 view .LVU110
+ 455 001a C0EB0010 		rsb	r0, r0, r0, lsl #4
+ 456              	.LVL33:
+ 457              		.loc 1 68 71 view .LVU111
+ 458 001e 07EBC000 		add	r0, r7, r0, lsl #3
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 11
+
+
+ 459              		.loc 1 68 74 view .LVU112
+ 460 0022 415C     		ldrb	r1, [r0, r1]	@ zero_extendqisi2
+ 461              	.LVL34:
+ 462              		.loc 1 68 31 view .LVU113
+ 463 0024 01FB0388 		mla	r8, r1, r3, r8
+ 464              	.LVL35:
+ 465              	.L42:
+ 466              		.loc 1 68 31 view .LVU114
+ 467              	.LBE27:
+  64:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+ 468              		.loc 1 64 66 is_stmt 1 discriminator 2 view .LVU115
+  64:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+ 469              		.loc 1 64 71 is_stmt 0 discriminator 2 view .LVU116
+ 470 0028 0132     		adds	r2, r2, #1
+ 471              	.LVL36:
+ 472              	.L44:
+  64:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+ 473              		.loc 1 64 45 is_stmt 1 discriminator 1 view .LVU117
+  64:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+ 474              		.loc 1 64 17 is_stmt 0 discriminator 1 view .LVU118
+ 475 002a 022A     		cmp	r2, #2
+ 476 002c 18D8     		bhi	.L54
+ 477              	.LBB28:
+  65:Src/convolution.c ****                     int y = image_j - dy + ker_j;
+ 478              		.loc 1 65 21 is_stmt 1 view .LVU119
+  65:Src/convolution.c ****                     int y = image_j - dy + ker_j;
+ 479              		.loc 1 65 42 is_stmt 0 view .LVU120
+ 480 002e 04EB0C03 		add	r3, r4, ip
+ 481 0032 581E     		subs	r0, r3, #1
+ 482              	.LVL37:
+  66:Src/convolution.c ****                     if(x >= 0 && x < rows && y >= 0 && y < cols)
+ 483              		.loc 1 66 21 is_stmt 1 view .LVU121
+  66:Src/convolution.c ****                     if(x >= 0 && x < rows && y >= 0 && y < cols)
+ 484              		.loc 1 66 42 is_stmt 0 view .LVU122
+ 485 0034 0EEB0201 		add	r1, lr, r2
+ 486 0038 0139     		subs	r1, r1, #1
+ 487              	.LVL38:
+  67:Src/convolution.c ****                         accum += ker_mat_hor[ker_i][ker_j] * input_mat[x][y];             
+ 488              		.loc 1 67 21 is_stmt 1 view .LVU123
+  67:Src/convolution.c ****                         accum += ker_mat_hor[ker_i][ker_j] * input_mat[x][y];             
+ 489              		.loc 1 67 26 is_stmt 0 view .LVU124
+ 490 003a 5B42     		rsbs	r3, r3, #0
+  67:Src/convolution.c ****                         accum += ker_mat_hor[ker_i][ker_j] * input_mat[x][y];             
+ 491              		.loc 1 67 36 view .LVU125
+ 492 003c 8542     		cmp	r5, r0
+ 493 003e D4BF     		ite	le
+ 494 0040 4FF0000A 		movle	r10, #0
+ 495 0044 4FF0010A 		movgt	r10, #1
+  67:Src/convolution.c ****                         accum += ker_mat_hor[ker_i][ker_j] * input_mat[x][y];             
+ 496              		.loc 1 67 23 view .LVU126
+ 497 0048 1AEAD373 		ands	r3, r10, r3, lsr #31
+ 498 004c ECD0     		beq	.L42
+  67:Src/convolution.c ****                         accum += ker_mat_hor[ker_i][ker_j] * input_mat[x][y];             
+ 499              		.loc 1 67 58 discriminator 1 view .LVU127
+ 500 004e 8945     		cmp	r9, r1
+ 501 0050 D4BF     		ite	le
+ 502 0052 0023     		movle	r3, #0
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 12
+
+
+ 503 0054 0123     		movgt	r3, #1
+  67:Src/convolution.c ****                         accum += ker_mat_hor[ker_i][ker_j] * input_mat[x][y];             
+ 504              		.loc 1 67 53 discriminator 1 view .LVU128
+ 505 0056 0029     		cmp	r1, #0
+ 506 0058 E6DB     		blt	.L42
+ 507 005a 002B     		cmp	r3, #0
+ 508 005c D8D1     		bne	.L55
+ 509 005e E3E7     		b	.L42
+ 510              	.LVL39:
+ 511              	.L54:
+  67:Src/convolution.c ****                         accum += ker_mat_hor[ker_i][ker_j] * input_mat[x][y];             
+ 512              		.loc 1 67 53 discriminator 1 view .LVU129
+ 513              	.LBE28:
+ 514              	.LBE26:
+  63:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+ 515              		.loc 1 63 62 is_stmt 1 discriminator 2 view .LVU130
+  63:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+ 516              		.loc 1 63 67 is_stmt 0 discriminator 2 view .LVU131
+ 517 0060 0CF1010C 		add	ip, ip, #1
+ 518              	.LVL40:
+ 519              	.L46:
+  63:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+ 520              		.loc 1 63 41 is_stmt 1 discriminator 1 view .LVU132
+  63:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+ 521              		.loc 1 63 13 is_stmt 0 discriminator 1 view .LVU133
+ 522 0064 BCF1020F 		cmp	ip, #2
+ 523 0068 01D8     		bhi	.L56
+ 524              	.LBB29:
+  64:Src/convolution.c ****                     int x = image_i - dx + ker_i;
+ 525              		.loc 1 64 34 view .LVU134
+ 526 006a 0022     		movs	r2, #0
+ 527 006c DDE7     		b	.L44
+ 528              	.L56:
+ 529              	.LBE29:
+ 530              	.LBE25:
+  69:Src/convolution.c ****                 }
+  70:Src/convolution.c ****             }
+  71:Src/convolution.c ****             if(accum < 0)
+ 531              		.loc 1 71 13 is_stmt 1 view .LVU135
+ 532              		.loc 1 71 15 is_stmt 0 view .LVU136
+ 533 006e B8F1000F 		cmp	r8, #0
+ 534 0072 05DB     		blt	.L49
+  72:Src/convolution.c ****                 accum = 0;
+  73:Src/convolution.c ****             if(accum > 253)
+ 535              		.loc 1 73 13 is_stmt 1 view .LVU137
+ 536              		.loc 1 73 15 is_stmt 0 view .LVU138
+ 537 0074 B8F1FD0F 		cmp	r8, #253
+ 538 0078 04DD     		ble	.L45
+  74:Src/convolution.c ****                 accum = 253;
+ 539              		.loc 1 74 23 view .LVU139
+ 540 007a 4FF0FD08 		mov	r8, #253
+ 541              	.LVL41:
+ 542              		.loc 1 74 23 view .LVU140
+ 543 007e 01E0     		b	.L45
+ 544              	.LVL42:
+ 545              	.L49:
+  72:Src/convolution.c ****                 accum = 0;
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 13
+
+
+ 546              		.loc 1 72 23 view .LVU141
+ 547 0080 4FF00008 		mov	r8, #0
+ 548              	.LVL43:
+ 549              	.L45:
+  75:Src/convolution.c ****             output_mat[image_i][image_j] = accum;
+ 550              		.loc 1 75 13 is_stmt 1 discriminator 2 view .LVU142
+ 551              		.loc 1 75 23 is_stmt 0 discriminator 2 view .LVU143
+ 552 0084 C4EB0413 		rsb	r3, r4, r4, lsl #4
+ 553 0088 06EBC303 		add	r3, r6, r3, lsl #3
+ 554              		.loc 1 75 42 discriminator 2 view .LVU144
+ 555 008c 03F80E80 		strb	r8, [r3, lr]
+ 556              	.LBE24:
+  61:Src/convolution.c ****             int accum = 0;
+ 557              		.loc 1 61 55 is_stmt 1 discriminator 2 view .LVU145
+  61:Src/convolution.c ****             int accum = 0;
+ 558              		.loc 1 61 62 is_stmt 0 discriminator 2 view .LVU146
+ 559 0090 0EF1010E 		add	lr, lr, #1
+ 560              	.LVL44:
+ 561              	.L47:
+  61:Src/convolution.c ****             int accum = 0;
+ 562              		.loc 1 61 39 is_stmt 1 discriminator 1 view .LVU147
+  61:Src/convolution.c ****             int accum = 0;
+ 563              		.loc 1 61 9 is_stmt 0 discriminator 1 view .LVU148
+ 564 0094 F145     		cmp	r9, lr
+ 565 0096 03D9     		bls	.L57
+ 566              	.LBB31:
+ 567              	.LBB30:
+  63:Src/convolution.c ****                 for(unsigned int ker_j = 0; ker_j < KERNEL_SIZE; ker_j++){
+ 568              		.loc 1 63 30 view .LVU149
+ 569 0098 4FF0000C 		mov	ip, #0
+ 570              	.LBE30:
+  62:Src/convolution.c ****             for(unsigned int ker_i = 0; ker_i < KERNEL_SIZE; ker_i++){ 
+ 571              		.loc 1 62 17 view .LVU150
+ 572 009c E046     		mov	r8, ip
+ 573 009e E1E7     		b	.L46
+ 574              	.L57:
+ 575              	.LBE31:
+ 576              	.LBE23:
+  60:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 577              		.loc 1 60 50 is_stmt 1 discriminator 2 view .LVU151
+  60:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 578              		.loc 1 60 57 is_stmt 0 discriminator 2 view .LVU152
+ 579 00a0 0134     		adds	r4, r4, #1
+ 580              	.LVL45:
+ 581              	.L41:
+  60:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 582              		.loc 1 60 35 is_stmt 1 discriminator 1 view .LVU153
+  60:Src/convolution.c ****         for(unsigned int image_j = 0; image_j < cols; image_j++){
+ 583              		.loc 1 60 5 is_stmt 0 discriminator 1 view .LVU154
+ 584 00a2 A542     		cmp	r5, r4
+ 585 00a4 02D9     		bls	.L58
+ 586              	.LBB32:
+  61:Src/convolution.c ****             int accum = 0;
+ 587              		.loc 1 61 26 view .LVU155
+ 588 00a6 4FF0000E 		mov	lr, #0
+ 589 00aa F3E7     		b	.L47
+ 590              	.L58:
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 14
+
+
+ 591              	.LBE32:
+ 592              	.LBE22:
+  76:Src/convolution.c ****         }
+  77:Src/convolution.c ****     }
+  78:Src/convolution.c **** }...
+ 593              		.loc 1 78 1 view .LVU156
+ 594 00ac BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 595              	.LVL46:
+ 596              	.L60:
+ 597              		.loc 1 78 1 view .LVU157
+ 598              		.align	2
+ 599              	.L59:
+ 600 00b0 00000000 		.word	.LANCHOR1
+ 601              		.cfi_endproc
+ 602              	.LFE147:
+ 604              		.section	.rodata.ker_mat_hor,"a"
+ 605              		.align	2
+ 606              		.set	.LANCHOR1,. + 0
+ 609              	ker_mat_hor:
+ 610 0000 010201   		.ascii	"\001\002\001"
+ 611 0003 000000   		.ascii	"\000\000\000"
+ 612 0006 FFFEFF   		.ascii	"\377\376\377"
+ 613              		.section	.rodata.ker_mat_ver,"a"
+ 614              		.align	2
+ 615              		.set	.LANCHOR0,. + 0
+ 618              	ker_mat_ver:
+ 619 0000 0100FF   		.ascii	"\001\000\377"
+ 620 0003 0200FE   		.ascii	"\002\000\376"
+ 621 0006 0100FF   		.ascii	"\001\000\377"
+ 622              		.text
+ 623              	.Letext0:
+ 624              		.file 2 "d:\\l\\program\\gcc-arm-none-eabi-10.3\\arm-none-eabi\\include\\machine\\_default_types.h
+ 625              		.file 3 "d:\\l\\program\\gcc-arm-none-eabi-10.3\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 626              		.file 4 "<built-in>"
+ARM GAS  C:\Users\theto\AppData\Local\Temp\cc2inAru.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 convolution.c
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:19     .text.initiate_matrix:00000000 $t
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:25     .text.initiate_matrix:00000000 initiate_matrix
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:96     .text.initiate_matrix:00000044 $d
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:101    .rodata.print_matrix.str1.4:00000000 $d
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:105    .text.print_matrix:00000000 $t
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:111    .text.print_matrix:00000000 print_matrix
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:194    .text.print_matrix:00000038 $d
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:199    .text.Sobel_operator_ver:00000000 $t
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:205    .text.Sobel_operator_ver:00000000 Sobel_operator_ver
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:397    .text.Sobel_operator_ver:000000b0 $d
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:402    .text.Sobel_operator_hor:00000000 $t
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:408    .text.Sobel_operator_hor:00000000 Sobel_operator_hor
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:600    .text.Sobel_operator_hor:000000b0 $d
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:605    .rodata.ker_mat_hor:00000000 $d
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:609    .rodata.ker_mat_hor:00000000 ker_mat_hor
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:614    .rodata.ker_mat_ver:00000000 $d
+C:\Users\theto\AppData\Local\Temp\cc2inAru.s:618    .rodata.ker_mat_ver:00000000 ker_mat_ver
+
+UNDEFINED SYMBOLS
+printf
+putchar
